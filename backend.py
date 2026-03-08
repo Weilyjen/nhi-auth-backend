@@ -32,7 +32,7 @@ async def check_user(email: str = Query(...)):
         r = await client.get(url, headers=headers, params=params, timeout=10)
 
     if r.status_code != 200:
-        return {"status": "error", "message": "無法連線至資料庫，請稍後再試"}
+        return {"status": "error", "code": r.status_code, "detail": r.text}
 
     items = r.json().get("items", [])
     if not items:
